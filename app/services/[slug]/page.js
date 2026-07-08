@@ -13,6 +13,7 @@ import Shell from "@/components/site/shell";
 import PageHero from "@/components/site/page-hero";
 import { Reveal, Stat, MagneticButton } from "@/components/site/fx";
 import { getServiceDetail, portfolioBySlug } from "@/lib/site-data";
+import { JsonLd, breadcrumbSchema, serviceSchema, faqSchema } from "@/lib/schema";
 
 export default function ServiceDetail({ params }) {
   const { slug } = use(params);
@@ -22,6 +23,11 @@ export default function ServiceDetail({ params }) {
 
   return (
     <Shell>
+      <JsonLd data={[
+        breadcrumbSchema([{ label: "Home", href: "/" }, { label: "Services", href: "/services" }, { label: s.name }]),
+        serviceSchema(s),
+        faqSchema(s.faqs),
+      ]} />
       <PageHero
         eyebrow={s.hero.eyebrow}
         title={s.hero.title}

@@ -2,41 +2,50 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Rocket, Sparkles, ArrowRight, ChevronRight, Star, Play, Check, ArrowUpRight, Quote,
+import {
+  Rocket, Sparkles, ArrowRight, Star, Play, Check, ArrowUpRight, Quote,
   Globe, Search, Megaphone, Palette, Bot, LineChart,
   Heart, GraduationCap, Plane, Building2, UtensilsCrossed, Landmark, Store, ShoppingBag,
-  Scissors, Factory, Car, Phone
+  Scissors, Factory, Car, Phone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Shell from "@/components/site/shell";
 import { MagneticButton, Reveal, Stat } from "@/components/site/fx";
 import { testimonials, portfolio } from "@/lib/site-data";
+import { getPortfolioImage } from "@/lib/media";
+
+const Hero3D = dynamic(() => import("@/components/site/hero-3d"), { ssr: false, loading: () => null });
 
 function Hero() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -240]);
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
   return (
     <section id="home" ref={ref} className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
-      <div className="absolute inset-0 mesh-bg" />
-      <div className="absolute inset-0 grid-lines opacity-40" />
-      <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-purple-600/30 blur-3xl animate-blob" />
-      <div className="absolute top-40 -right-40 w-[500px] h-[500px] rounded-full bg-fuchsia-500/25 blur-3xl animate-blob" style={{ animationDelay: "3s" }} />
-      <div className="absolute bottom-0 left-1/3 w-[500px] h-[500px] rounded-full bg-indigo-600/25 blur-3xl animate-blob" style={{ animationDelay: "6s" }} />
-      <div className="container relative">
+      {/* Layer 1: 3D Canvas absolute background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <Hero3D />
+      </div>
+      {/* Layer 2: Subtle mesh overlay to blend */}
+      <div className="absolute inset-0 mesh-bg opacity-40 pointer-events-none" />
+      <div className="absolute inset-0 grid-lines opacity-25 pointer-events-none" />
+      {/* Radial dark vignette so text pops */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(8,6,26,0.6)_65%,rgba(8,6,26,0.9)_100%)]" />
+
+      <div className="container relative z-10">
         <motion.div style={{ y: y1, opacity }} className="max-w-5xl mx-auto text-center">
           <Reveal delay={0.05}>
-            <Badge className="mb-6 bg-white/5 border-white/10 text-white/80 backdrop-blur px-4 py-1.5 rounded-full">
+            <Badge className="mb-6 bg-white/10 border-white/20 text-white/90 backdrop-blur px-4 py-1.5 rounded-full">
               <Sparkles className="w-3.5 h-3.5 mr-1.5 text-brand-glow" />
               A new era of digital agencies · Now onboarding for 2025
             </Badge>
           </Reveal>
           <Reveal delay={0.15}>
-            <h1 className="font-heading font-bold text-5xl md:text-7xl lg:text-8xl leading-[1.02] tracking-tight">
+            <h1 className="font-heading font-bold text-5xl md:text-7xl lg:text-8xl leading-[1.02] tracking-tight drop-shadow-2xl">
               <span className="text-gradient-soft">We craft </span>
               <span className="text-gradient">digital experiences</span><br />
               <span className="text-gradient-soft">that </span>
@@ -51,7 +60,7 @@ function Hero() {
             </h1>
           </Reveal>
           <Reveal delay={0.35}>
-            <p className="mt-8 text-lg md:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-8 text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
               Digify4u is a full-service <span className="text-white">IT & digital marketing agency</span> building brands, products and growth engines for the next generation of ambitious companies.
             </p>
           </Reveal>
@@ -63,14 +72,15 @@ function Hero() {
                 </Button>
               </Link></MagneticButton>
               <MagneticButton><Link href="/portfolio">
-                <Button size="lg" variant="ghost" className="rounded-full px-8 h-14 text-base text-white hover:bg-white/5 border border-white/10">
+                <Button size="lg" variant="ghost" className="rounded-full px-8 h-14 text-base text-white hover:bg-white/5 border border-white/20 backdrop-blur">
                   <Play className="w-4 h-4 mr-2 fill-white" /> Watch Showreel
                 </Button>
               </Link></MagneticButton>
             </div>
           </Reveal>
-          <motion.div style={{ y: y2 }} className="relative mt-24 max-w-4xl mx-auto">
-            <Reveal delay={0.65}>
+
+          <Reveal delay={0.7}>
+            <div className="relative mt-20 max-w-4xl mx-auto">
               <div className="relative glass-strong rounded-3xl p-6 md:p-8 shadow-2xl shadow-purple-900/40">
                 <div className="absolute -top-4 -left-4 w-24 h-24 rounded-2xl bg-gradient-brand shadow-glow flex items-center justify-center animate-float"><Rocket className="w-10 h-10 text-white" /></div>
                 <div className="absolute -bottom-4 -right-4 w-20 h-20 rounded-2xl glass-strong flex items-center justify-center animate-float" style={{ animationDelay: "2s" }}><LineChart className="w-9 h-9 text-brand-glow" /></div>
@@ -81,8 +91,8 @@ function Hero() {
                   <Stat value="99%" label="Retention Rate" />
                 </div>
               </div>
-            </Reveal>
-          </motion.div>
+            </div>
+          </Reveal>
         </motion.div>
       </div>
     </section>
@@ -110,7 +120,7 @@ function Services() {
     { icon: Search, title: "SEO & Growth", desc: "Data-driven SEO that compounds. Technical, on-page and content strategy that dominates SERPs.", tags: ["Technical", "Content", "Local"], href: "/services/seo" },
     { icon: Megaphone, title: "Performance Marketing", desc: "Google, Meta, LinkedIn and YouTube ads engineered for ROAS with full-funnel tracking.", tags: ["Google Ads", "Meta", "LinkedIn"], href: "/services/performance-marketing" },
     { icon: Palette, title: "Branding & Design", desc: "Identities, guidelines and design systems that make your brand instantly recognizable.", tags: ["Identity", "UI/UX", "Systems"], href: "/services/branding" },
-    { icon: Bot, title: "AI Automation", desc: "Chatbots, WhatsApp automation, CRM workflows and AI agents that scale your team.", tags: ["GPT", "n8n", "CRM"], href: "/services/ai-automation" },
+    { icon: Bot, title: "AI Automation", desc: "Chatbots, WhatsApp automation, CRM workflows and AI agents that scale your team.", tags: ["GPT-4o", "n8n", "CRM"], href: "/services/ai-automation" },
     { icon: Play, title: "Video & Content", desc: "Reels, ads, product shoots and drone videography that stops the scroll.", tags: ["Reels", "Ads", "Drone"], href: "/services/video-production" },
   ];
   return (
@@ -235,21 +245,25 @@ function PortfolioPreview() {
           <Reveal delay={0.2}><Link href="/portfolio" className="hidden md:inline-flex items-center gap-2 text-white/70 hover:text-white transition text-sm">View all projects <ArrowUpRight className="w-4 h-4" /></Link></Reveal>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {items.map((it, i) => (
-            <Reveal key={it.title} delay={i * 0.08}>
-              <Link href={`/portfolio/${it.slug}`} data-cursor="hover" className="group relative block rounded-3xl overflow-hidden aspect-[4/3]">
-                <div className={`absolute inset-0 bg-gradient-to-br ${it.grad}`} />
-                <div className="absolute inset-0 mesh-bg opacity-40 mix-blend-overlay" />
-                <div className="absolute inset-0 grid-lines opacity-30" />
-                <div className="absolute inset-0 flex items-center justify-center"><div className="w-40 h-40 rounded-3xl glass-strong flex items-center justify-center shadow-glow"><span className="text-5xl font-heading font-bold text-white/90">{it.title.charAt(0)}</span></div></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex items-end justify-between">
-                  <div><div className="text-xs uppercase tracking-widest text-white/70 mb-2">{it.category}</div><h3 className="font-heading font-bold text-2xl md:text-3xl text-white">{it.title}</h3></div>
-                  <div className="w-12 h-12 rounded-full glass-strong flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all"><ArrowUpRight className="w-5 h-5 text-white" /></div>
-                </div>
-              </Link>
-            </Reveal>
-          ))}
+          {items.map((it, i) => {
+            const img = getPortfolioImage(it.slug).hero;
+            return (
+              <Reveal key={it.title} delay={i * 0.08}>
+                <Link href={`/portfolio/${it.slug}`} data-cursor="hover" className="group relative block rounded-3xl overflow-hidden aspect-[4/3]">
+                  <img src={img} alt={it.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                  <div className={`absolute inset-0 opacity-30 mix-blend-overlay bg-gradient-to-br ${it.grad}`} />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex items-end justify-between">
+                    <div>
+                      <div className="text-xs uppercase tracking-widest text-white/70 mb-2">{it.category}</div>
+                      <h3 className="font-heading font-bold text-2xl md:text-3xl text-white">{it.title}</h3>
+                    </div>
+                    <div className="w-12 h-12 rounded-full glass-strong flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all"><ArrowUpRight className="w-5 h-5 text-white" /></div>
+                  </div>
+                </Link>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

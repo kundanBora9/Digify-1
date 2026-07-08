@@ -10,6 +10,7 @@ import Shell from "@/components/site/shell";
 import PageHero from "@/components/site/page-hero";
 import { Reveal, Stat, MagneticButton } from "@/components/site/fx";
 import { getIndustryDetail } from "@/lib/site-data";
+import { JsonLd, breadcrumbSchema, industrySchema, faqSchema } from "@/lib/schema";
 
 export default function IndustryDetail({ params }) {
   const { slug } = use(params);
@@ -18,6 +19,11 @@ export default function IndustryDetail({ params }) {
 
   return (
     <Shell>
+      <JsonLd data={[
+        breadcrumbSchema([{ label: "Home", href: "/" }, { label: "Industries", href: "/industries" }, { label: d.name }]),
+        industrySchema(d),
+        faqSchema(d.faqs),
+      ]} />
       <PageHero eyebrow={`Industry · ${d.name}`} title={`${d.name}`} gradientPart="marketing that works." subtitle={d.tagline} breadcrumbs={[{ label: "Home", href: "/" }, { label: "Industries", href: "/industries" }, { label: d.name }]} />
 
       <section className="relative py-8"><div className="container"><div className="glass-strong rounded-3xl p-8 grid grid-cols-2 md:grid-cols-4 gap-6">{d.metrics.map(m => (<Stat key={m.label} value={m.value} label={m.label} />))}</div></div></section>
