@@ -1,9 +1,20 @@
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Manrope, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { JsonLd, organizationSchema, websiteSchema } from "@/lib/schema";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk", display: "swap" });
+const body = Manrope({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800"],
+});
+
+const heading = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 const BASE = process.env.NEXT_PUBLIC_BASE_URL || "https://digify4u.com";
 
@@ -41,7 +52,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${body.variable} ${heading.variable}`}>
       <head>
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
       </head>

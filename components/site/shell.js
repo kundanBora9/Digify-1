@@ -3,10 +3,12 @@ import { Toaster } from "sonner";
 import Navbar from "@/components/site/nav";
 import Footer from "@/components/site/footer";
 import { CursorGlow, ScrollProgress, FloatingWhatsApp } from "@/components/site/fx";
+import NavLoader from "@/components/site/nav-loader";
 
 export default function Shell({ children }) {
   return (
     <div className="relative bg-[#08061a] text-white min-h-screen">
+      <NavLoader />
       <CursorGlow />
       <ScrollProgress />
       <Navbar />
