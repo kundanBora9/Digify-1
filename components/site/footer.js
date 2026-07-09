@@ -58,7 +58,7 @@ export default function Footer() {
           <div>© {new Date().getFullYear()} Digify4u. All rights reserved.</div>
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> India · Global</span>
-            <a href="mailto:hello@digify4u.com" className="hover:text-white flex items-center gap-1"><Mail className="w-4 h-4" /> hello@digify4u.com</a>
+            <a href="mailto:info@digify4u.com" className="hover:text-white flex items-center gap-1"><Mail className="w-4 h-4" /> info@digify4u.com</a>
           </div>
         </div>
       </div>

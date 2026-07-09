@@ -41,8 +41,8 @@ export default function ContactPage() {
 
       <section className="relative py-8"><div className="container grid lg:grid-cols-3 gap-6">
         {[
-          { icon: Mail, title: "Email", value: "hello@digify4u.com", desc: "Best for detailed briefs" },
-          { icon: Phone, title: "Phone", value: "+91 98XXX XXXXX", desc: "Mon–Sat, 10am–19:00 IST" },
+          { icon: Mail, title: "Email", value: "Info@digify4u.com", desc: "Best for detailed briefs" },
+          { icon: Phone, title: "Phone", value: "+91 7347374706", desc: "Mon–Sat, 10am–19:00 IST" },
           { icon: MessageCircle, title: "WhatsApp", value: "Chat with us", desc: "Fastest response" },
         ].map((c, i) => (
           <Reveal key={c.title} delay={i * 0.05}><div className="glass rounded-3xl p-8">
@@ -82,8 +82,8 @@ export default function ContactPage() {
         <Reveal delay={0.1} className="lg:col-span-2 space-y-6">
           <div className="glass rounded-3xl p-8">
             <div className="w-12 h-12 rounded-xl bg-gradient-brand flex items-center justify-center mb-5"><MapPin className="w-6 h-6 text-white" /></div>
-            <h3 className="font-heading font-bold text-xl text-white">Bangalore HQ</h3>
-            <p className="text-white/60 mt-2">Indiranagar, 100 Feet Road,<br />Bangalore, Karnataka 560038<br />India</p>
+            <h3 className="font-heading font-bold text-xl text-white">Delhi HQ</h3>
+            <p className="text-white/60 mt-2">Janakpuri <br />Delhi 110058<br />India</p>
           </div>
           <div className="glass rounded-3xl p-8">
             <div className="w-12 h-12 rounded-xl bg-gradient-brand flex items-center justify-center mb-5"><Clock className="w-6 h-6 text-white" /></div>
