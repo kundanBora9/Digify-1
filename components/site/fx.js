@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useInView } from "framer-motion";
 import LogoImage from "../../assets/logo.png";
@@ -108,13 +109,15 @@ export function FloatingWhatsApp() {
   );
 } 
 
+
 export function Logo({ small = false }) {
   return (
     <Link href="/" className="flex items-center gap-2 group">
-      <img
+      <Image
         src={LogoImage}
         alt="Logo"
-        className={small ? "h-6 w-auto" : "h-8 w-auto"}
+        className={small ? "h-12 w-auto" : "h-12 w-auto"}
+        priority
       />
     </Link>
   );
