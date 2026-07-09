@@ -1,7 +1,8 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useInView } from "framer-motion";
-
+import LogoImage from "../../assets/logo.png";
 export function CursorGlow() {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
@@ -105,21 +106,16 @@ export function FloatingWhatsApp() {
       <svg viewBox="0 0 24 24" className="w-7 h-7 fill-white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.966-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/><path d="M12.014 2C6.483 2 2 6.483 2 12.014c0 1.755.462 3.472 1.34 4.983L2 22l5.145-1.324a10.017 10.017 0 0 0 4.869 1.234c5.53 0 10.014-4.483 10.014-10.014S17.545 2 12.014 2zm0 18.198a8.169 8.169 0 0 1-4.164-1.14l-.298-.174-3.095.797.828-3.02-.198-.322A8.16 8.16 0 0 1 3.832 12.014c0-4.517 3.665-8.182 8.182-8.182S20.196 7.497 20.196 12.014s-3.665 8.184-8.182 8.184z"/></svg>
     </a>
   );
-}
+} 
 
 export function Logo({ small = false }) {
   return (
-    <a href="/" className="flex items-center gap-2 group">
-      <div className={`relative ${small ? "w-8 h-8" : "w-10 h-10"} rounded-xl bg-gradient-brand shadow-glow flex items-center justify-center overflow-hidden`}>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.5),transparent_60%)]" />
-        <span className="relative font-heading font-bold text-white text-lg">D</span>
-      </div>
-      <div className="leading-tight">
-        <div className={`font-heading font-bold ${small ? "text-base" : "text-xl"} text-white tracking-tight`}>
-          Digify<span className="text-gradient">4u</span>
-        </div>
-        {!small && <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">IT · Digital Marketing</div>}
-      </div>
-    </a>
+    <Link href="/" className="flex items-center gap-2 group">
+      <img
+        src={LogoImage}
+        alt="Logo"
+        className={small ? "h-6 w-auto" : "h-8 w-auto"}
+      />
+    </Link>
   );
 }

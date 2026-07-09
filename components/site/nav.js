@@ -6,7 +6,6 @@ import { ArrowRight, ChevronRight, Menu, X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo, MagneticButton, Stat } from "@/components/site/fx";
 import { serviceMegaColumns, industriesList } from "@/lib/site-data";
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState(null);
@@ -26,7 +25,7 @@ export default function Navbar() {
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-5"}`} onMouseLeave={() => setActive(null)}>
         <div className="container">
           <div className={`flex items-center justify-between rounded-full px-4 md:px-6 py-2.5 transition-all duration-500 ${scrolled ? "glass-strong shadow-2xl shadow-purple-900/20" : "bg-transparent"}`}>
-           
+            <Logo small={scrolled} />
             <nav className="hidden lg:flex items-center gap-1">
               <Link href="/" className={navItem} onMouseEnter={() => setActive(null)}>Home</Link>
               <Link href="/about" className={navItem} onMouseEnter={() => setActive(null)}>About</Link>
@@ -124,7 +123,7 @@ export default function Navbar() {
         {mobile && (
           <motion.div initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "tween" }} className="fixed inset-0 z-[60] glass-strong lg:hidden overflow-y-auto">
             <div className="p-6 flex items-center justify-between">
-              <Logo />
+              <Logo  />
               <button onClick={() => setMobile(false)} className="p-2 text-white" aria-label="Close"><X /></button>
             </div>
             <div className="p-6 space-y-1">
