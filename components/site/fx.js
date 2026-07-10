@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useInView } from "framer-motion";
-import LogoImage from "../../assets/logo.png";
+import LogoImage from "../../assets/logo-new.png";
 export function CursorGlow() {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
@@ -116,7 +116,7 @@ export function Logo({ small = false }) {
       <Image
         src={LogoImage}
         alt="Logo"
-        className={small ? "h-12 w-auto" : "h-12 w-auto"}
+        className={small ? "h-24 w-auto" : "h-24 w-auto"}
         priority
       />
     </Link>

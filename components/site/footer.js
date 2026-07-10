@@ -21,6 +21,13 @@ export default function Footer() {
     } catch { toast.error("Network error"); }
     finally { setLoading(false); }
   };
+  const socials = [
+    { Icon: Instagram, href: "https://www.instagram.com/digify4u?utm_source=qr&igsh=bDZuZWwyb2x3bTNp", label: "Instagram" },
+    { Icon: Facebook, href: "https://www.facebook.com/your-page", label: "Facebook" },
+    { Icon: Linkedin, href: "https://www.linkedin.com/company/your-company", label: "LinkedIn" },
+    { Icon: Twitter, href: "https://twitter.com/your-handle", label: "Twitter" },
+    { Icon: Youtube, href: "https://www.youtube.com/@your-channel", label: "YouTube" },
+  ];
   return (
     <footer className="relative pt-24 pb-10 border-t border-white/5 bg-[#050318]">
       <div className="absolute inset-0 mesh-bg opacity-20 pointer-events-none" />
@@ -34,15 +41,18 @@ export default function Footer() {
               <Button type="submit" disabled={loading} className="bg-gradient-brand rounded-full h-12 px-6 font-semibold">{loading ? "..." : "Subscribe"}</Button>
             </form>
             <div className="flex gap-3">
-              {[Instagram, Facebook, Linkedin, Twitter, Youtube].map((Icon, i) => (
-                <a key={i} href="#" aria-label="social" className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-white/10 transition"><Icon className="w-4 h-4 text-white/80" /></a>
+              {socials.map(({ Icon, href, label }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                  aria-label={label} className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-white/10 transition">
+                  <Icon className="w-4 h-4 text-white/80" />
+                </a>
               ))}
             </div>
           </div>
           {[
-            { title: "Services", items: [["Web Development","/services/website-development"],["SEO","/services/seo"],["Performance Marketing","/services/performance-marketing"],["Branding","/services/branding"],["AI Automation","/services/ai-automation"],["Video Production","/services/video-production"]] },
-            { title: "Company", items: [["About","/about"],["Portfolio","/portfolio"],["Case Studies","/case-studies"],["Careers","/careers"],["Blog","/blog"],["Contact","/contact"]] },
-            { title: "Resources", items: [["Pricing","/pricing"],["Industries","/industries"],["All Services","/services"],["FAQ","/contact"],["Privacy Policy","#"],["Terms of Service","#"]] },
+            { title: "Services", items: [["Web Development", "/services/website-development"], ["SEO", "/services/seo"], ["Performance Marketing", "/services/performance-marketing"], ["Branding", "/services/branding"], ["AI Automation", "/services/ai-automation"], ["Video Production", "/services/video-production"]] },
+            { title: "Company", items: [["About", "/about"], ["Portfolio", "/portfolio"], ["Case Studies", "/case-studies"], ["Careers", "/careers"], ["Blog", "/blog"], ["Contact", "/contact"]] },
+            { title: "Resources", items: [["Pricing", "/pricing"], ["Industries", "/industries"], ["All Services", "/services"], ["FAQ", "/contact"], ["Privacy Policy", "#"], ["Terms of Service", "#"]] },
           ].map((col) => (
             <div key={col.title}>
               <div className="font-heading font-semibold text-white mb-4">{col.title}</div>
