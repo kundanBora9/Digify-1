@@ -1,20 +1,7 @@
 import { NextResponse } from "next/server";
-import { MongoClient } from "mongodb";
-import { v4 as uuidv4 } from "uuid";
 import { Resend } from "resend";
 
-let cachedClient = null;
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-async function getDb() {
-  if (!process.env.MONGO_URL) throw new Error("MONGO_URL not set");
-  if (!cachedClient) {
-    cachedClient = new MongoClient(process.env.MONGO_URL);
-    await cachedClient.connect();
-  }
-  const dbName = process.env.DB_NAME || "digify4u";
-  return cachedClient.db(dbName);
-}
 
 function json(data, status = 200) {
   return NextResponse.json(data, { status });
@@ -53,6 +40,22 @@ async function sendContactEmails({ name, email, message }) {
   });
 }
 
+async function sendNewsletterEmail(email) {
+  await resend.emails.send({
+    from: "Digify4u <onboarding@resend.dev>", // swap once your domain is verified
+    to: email,
+    subject: "Welcome to the Digify4u newsletter!",
+    html: `
+      <div style="font-family: sans-serif; max-width: 480px; margin: auto;">
+        <h2>You're subscribed!</h2>
+        <p>Thanks for signing up — you'll now get updates on our latest work, insights and offers.</p>
+        <br/>
+        <p>— The Digify4u Team</p>
+      </div>
+    `,
+  });
+}
+
 export async function GET(request, { params }) {
   const path = params.path?.join("/") || "";
   if (path === "" || path === "health") {
@@ -71,10 +74,15 @@ export async function POST(request, { params }) {
       if (!email || !email.includes("@")) {
         return json({ error: "Please provide a valid email" }, 400);
       }
-      const db = await getDb();
-      const doc = { id: uuidv4(), email, createdAt: new Date().toISOString() };
-      await db.collection("newsletter").insertOne(doc);
-      return json({ ok: true, message: "Subscribed!", id: doc.id });
+
+      try {
+        await sendNewsletterEmail(email);
+      } catch (emailErr) {
+        console.error("Newsletter email failed:", emailErr);
+        return json({ error: "Failed to subscribe. Please try again." }, 500);
+      }
+
+      return json({ ok: true, message: "Subscribed!" });
     }
 
     if (path === "contact") {
@@ -83,19 +91,14 @@ export async function POST(request, { params }) {
         return json({ error: "Missing fields" }, 400);
       }
 
-      const db = await getDb();
-      const doc = { id: uuidv4(), name, email, message, createdAt: new Date().toISOString() };
-      await db.collection("contacts").insertOne(doc);
-
-      // Send emails, but don't fail the whole request if email sending has an issue —
-      // the enquiry is already safely saved in Mongo either way.
       try {
         await sendContactEmails({ name, email, message });
       } catch (emailErr) {
-        console.error("Email send failed:", emailErr);
+        console.error("Contact email failed:", emailErr);
+        return json({ error: "Failed to send message. Please try again." }, 500);
       }
 
-      return json({ ok: true, id: doc.id });
+      return json({ ok: true });
     }
 
     return json({ error: "Not found", path }, 404);
