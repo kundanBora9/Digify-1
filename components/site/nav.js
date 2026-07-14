@@ -22,6 +22,7 @@ export default function Navbar() {
 
   return (
     <>
+    
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-5"}`} onMouseLeave={() => setActive(null)}>
         <div className="container">
           <div className={`flex items-center justify-between rounded-full px-4 md:px-6 py-2.5 transition-all duration-500 ${scrolled ? "glass-strong shadow-2xl shadow-purple-900/20" : "bg-transparent"}`}>
